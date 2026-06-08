@@ -19,8 +19,11 @@ export function setupImageUpload(inputId, canvasId) {
                 // 1. Nakładamy efekt lustra
                 applyQuadMirror(img, canvas, ctx);
                 
-                // 2. Nakładamy cięcie na paski
-                applyInterlace(canvas, ctx);
+                // 2. Pierwsze cięcie (pionowe)
+                applyInterlace(canvas, ctx, 'vertical');
+
+                // 3. Drugie cięcie (poziome) - imituje obrót i cięcie
+                applyInterlace(canvas, ctx, 'horizontal');
             };
             
             img.src = e.target.result;
