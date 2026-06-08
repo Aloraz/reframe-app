@@ -1,4 +1,5 @@
 import { applyQuadMirror } from './effects/mirror.js';
+import { applyInterlace } from './effects/slicer.js'; // Dodajemy import
 
 export function setupImageUpload(inputId, canvasId) {
     const input = document.getElementById(inputId);
@@ -15,8 +16,11 @@ export function setupImageUpload(inputId, canvasId) {
             const img = new Image();
             
             img.onload = () => {
-                // Zamiast standardowego rysowania, wywołujemy nasz efekt lustra!
+                // 1. Nakładamy efekt lustra
                 applyQuadMirror(img, canvas, ctx);
+                
+                // 2. Nakładamy cięcie na paski
+                applyInterlace(canvas, ctx);
             };
             
             img.src = e.target.result;
