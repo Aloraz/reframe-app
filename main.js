@@ -1,5 +1,9 @@
 import './style.css';
 import { setupImageUpload } from './src/imageHandler.js';
+import { setupDownload } from './src/export.js'; // Dodajemy import
 
-// Inicjalizujemy logikę, przekazując ID naszych elementów z HTML
-setupImageUpload('imageUpload', 'mainCanvas');
+// Aktualizujemy wywołanie - przekazujemy ID przycisku
+setupImageUpload('imageUpload', 'mainCanvas', 'downloadBtn');
+
+// Uruchamiamy nasłuchiwanie na przycisku pobierania
+setupDownload('downloadBtn', 'mainCanvas');

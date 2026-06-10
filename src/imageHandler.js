@@ -1,9 +1,11 @@
 import { applyQuadMirror } from './effects/mirror.js';
-import { applyInterlace } from './effects/slicer.js'; // Dodajemy import
+import { applyInterlace } from './effects/slicer.js';
 
-export function setupImageUpload(inputId, canvasId) {
+// Dodajemy trzeci parametr: buttonId
+export function setupImageUpload(inputId, canvasId, buttonId) {
     const input = document.getElementById(inputId);
     const canvas = document.getElementById(canvasId);
+    const downloadBtn = document.getElementById(buttonId); // Pobieramy przycisk
     const ctx = canvas.getContext('2d');
 
     input.addEventListener('change', (event) => {
@@ -16,14 +18,12 @@ export function setupImageUpload(inputId, canvasId) {
             const img = new Image();
             
             img.onload = () => {
-                // 1. Nakładamy efekt lustra
                 applyQuadMirror(img, canvas, ctx);
-                
-                // 2. Pierwsze cięcie (pionowe)
                 applyInterlace(canvas, ctx, 'vertical');
-
-                // 3. Drugie cięcie (poziome) - imituje obrót i cięcie
                 applyInterlace(canvas, ctx, 'horizontal');
+                
+                // Odblokowujemy przycisk zapisu po nałożeniu efektów!
+                downloadBtn.disabled = false; 
             };
             
             img.src = e.target.result;
